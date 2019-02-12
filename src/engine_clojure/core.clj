@@ -1,0 +1,14 @@
+(ns engine-clojure.core
+    (:gen-class)ide
+    (:require [compojure.core :refer :all]
+              [org.httpkit.server :refer [run-server]]
+              [cheshire.core :as json]
+              [engine-clojure.camunda :as c]))
+
+(defroutes myapp
+  (GET "/tasks" [] (json/generate-string (c/get-tasks)))
+  (POST "/start" [] (.getId (c/start-instance-by-key "complaint-process" {"value" 500}))))
+
+(defn -main []
+  (c/bootstrap)
+  (run-server myapp {:port 5000}))

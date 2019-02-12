@@ -1,0 +1,1 @@
+boot watch aot -n engine-clojure repl -s wait &
