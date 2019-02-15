@@ -31,12 +31,12 @@
     <bpmn:sequenceFlow id="SequenceFlow_1fbmrnb" sourceRef="Task_PremiumMail" targetRef="ExclusiveGateway_SupportTypeMerge" />
     <bpmn:sequenceFlow id="SequenceFlow_0j6k6zo" sourceRef="Task_BasicName" targetRef="ExclusiveGateway_SupportTypeMerge" />
     <bpmn:sequenceFlow id="SequenceFlow_07s6yaj" sourceRef="ExclusiveGateway_SupportTypeMerge" targetRef="Task_InvestigateIssue" />
-    <bpmn:userTask id="Task_InvestigateIssue" name="Investigate issue">
+    <bpmn:userTask id="Task_InvestigateIssue" name="Investigate issue" camunda:candidateGroups="specialists" camunda:dueDate="${dateTime().plusDays(1).toDate()}">
       <bpmn:incoming>SequenceFlow_07s6yaj</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_091cjd1</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_091cjd1" sourceRef="Task_InvestigateIssue" targetRef="Task_ResolveIssueManually" />
-    <bpmn:userTask id="Task_ResolveIssueManually" name="Resolve issue manually">
+    <bpmn:userTask id="Task_ResolveIssueManually" name="Resolve issue manually" camunda:candidateGroups="specialists" camunda:dueDate="${dateTime().plusDays(1).toDate()}">
       <bpmn:incoming>SequenceFlow_091cjd1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1bhupt9</bpmn:outgoing>
     </bpmn:userTask>
@@ -106,7 +106,7 @@
     <bpmn:sequenceFlow id="SequenceFlow_0hh5m01" sourceRef="BoundaryEvent_SLAInvestigate" targetRef="Task_SpecialForcesTeam" />
     <bpmn:sequenceFlow id="SequenceFlow_1y6y9tz" sourceRef="BoundaryEvent_SLAResolve" targetRef="Task_SpecialForcesTeam" />
     <bpmn:sequenceFlow id="SequenceFlow_0m6vtci" sourceRef="Task_SpecialForcesTeam" targetRef="ExclusiveGateway_SLAMerge" />
-    <bpmn:userTask id="Task_SpecialForcesTeam" name="Special Forces Team">
+    <bpmn:userTask id="Task_SpecialForcesTeam" name="Special Forces Team" camunda:candidateGroups="special-forces" camunda:dueDate="${dateTime().plusDays(1).toDate()}">
       <bpmn:incoming>SequenceFlow_0hh5m01</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1y6y9tz</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0m6vtci</bpmn:outgoing>

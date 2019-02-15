@@ -45,4 +45,5 @@
 (defn get-tasks []
   (map convert-task (.list (.createTaskQuery (task-service)))))
 
-
+(defn get-tasks-for-candidate-group [group]
+  (map convert-task (.list (.taskCandidateGroup (.createTaskQuery (task-service)) group))))
