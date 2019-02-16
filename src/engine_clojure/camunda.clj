@@ -7,10 +7,15 @@
 
 (def camunda (build-engine))
 
+(defn user-service []
+  (.getIdentityService camunda))
+
 (defn deploy-process [definition-file]
   (let [repo-service (.getRepositoryService camunda)
         name         "process.bpmn"
         input-stream (clojure.java.io/input-stream definition-file)]
+    (.newUser (user-service) "fred")
+    (.newGroup (user-service) "specialists")
     (.deploy (.addInputStream (.createDeployment repo-service)            
                               name
                               input-stream))))
@@ -42,8 +47,12 @@
      :due-date due-date
      :id id}))
 
+(defn get-task [id]
+  (into {} (.getVariables (task-service) id)))
+
 (defn get-tasks []
   (map convert-task (.list (.createTaskQuery (task-service)))))
 
 (defn get-tasks-for-candidate-group [group]
   (map convert-task (.list (.taskCandidateGroup (.createTaskQuery (task-service)) group))))
+
