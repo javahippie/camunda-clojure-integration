@@ -56,3 +56,5 @@
 (defn get-tasks-for-candidate-group [group]
   (map convert-task (.list (.taskCandidateGroup (.createTaskQuery (task-service)) group))))
 
+(defn claim-task [id user]
+  (.claim (task-service) id user))

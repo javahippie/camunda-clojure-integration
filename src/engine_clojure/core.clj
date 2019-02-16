@@ -8,12 +8,18 @@
 (defn to-string [payload]
   (json/generate-string payload))
 
+(defn from-string [json]
+  (json/parse-string json true))
+
 (defroutes myapp
   (GET "/task/:id" [id]
        (to-string (c/get-task id)))
 
-  (POST "/task/:id/claim" request
-        (print (:params request)))
+  (POST "/task/:id/claim" {body :body}
+        (let [payload (from-string (slurp body))
+              id (:id payload)
+              user (:user payload)]
+          (c/claim-task id user)))
 
   (POST "/task/:id/complete" request
         (print (:params request)))
